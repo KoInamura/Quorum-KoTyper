@@ -1,0 +1,1839 @@
+use Libraries.Game.Game
+use Libraries.Game.Graphics.Drawable
+use Libraries.Game.InputMonitor
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Sound.Audio
+use Libraries.Containers.Array
+use Libraries.Compute.Random
+use Libraries.Game.Graphics.Label
+use Libraries.Game.Graphics.Font
+
+class Main is Game
+
+Array<Drawable> arrayOfDrawables
+Array<Audio> arrayOfLetterSounds
+Array<Audio> arrayOfWordAudio1
+Array<Audio> arrayOfWordAudio2
+Array<Audio> arrayOfWordAudio3
+Array<Audio> arrayOfWordAudio4
+
+Array<text> arrayOfWords1
+Array<text> arrayOfWords2
+Array<text> arrayOfWords3
+Array<text> arrayOfWords4
+
+Drawable choiceScreen
+
+Drawable letterA
+Drawable letterB
+Drawable letterC
+Drawable letterD
+Drawable letterE
+Drawable letterF
+Drawable letterG
+Drawable letterH
+Drawable letterI
+Drawable letterJ
+Drawable letterK
+Drawable letterL
+Drawable letterM
+Drawable letterN
+Drawable letterO
+Drawable letterP
+Drawable letterQ
+Drawable letterR
+Drawable letterS
+Drawable letterT
+Drawable letterU
+Drawable letterV
+Drawable letterW
+Drawable letterX
+Drawable letterY
+Drawable letterZ
+Drawable spaceKey
+Drawable semiColon
+
+Drawable enterKey
+
+Drawable nextDrawable
+
+Label enterLabel
+Label labelX
+Label levelOption
+Font font1
+Font fontX
+Font fontLO
+
+//Obejects for audio effect
+Audio ping
+Audio cheer
+
+//Obejects for letter audio
+Audio lowerA
+Audio lowerB
+Audio lowerC
+Audio lowerD
+Audio lowerE
+Audio lowerF
+Audio lowerG
+Audio lowerH
+Audio lowerI
+Audio lowerJ
+Audio lowerK
+Audio lowerL
+Audio lowerM
+Audio lowerN
+Audio lowerO
+Audio lowerP
+Audio lowerQ
+Audio lowerR
+Audio lowerS
+Audio lowerT
+Audio lowerU
+Audio lowerV
+Audio lowerW
+Audio lowerX
+Audio lowerY
+Audio lowerZ
+
+Audio space
+Audio semicolon
+
+Audio nextLetterAudio
+Audio nextWrodAudio
+
+//Instatiating Audio objects for words.....................................
+//Objects for word aduio for arrayOfWordAudio1...
+Audio ff
+Audio jj
+Audio dd
+Audio kk
+Audio ss
+Audio ll
+Audio a_s
+Audio asdf
+Audio jklSem
+Audio jdk
+Audio sla
+Audio aSemA
+Audio sls
+Audio dkd
+Audio fjf
+
+//Objects for word audio for arrayOfWordAudio2...
+Audio add
+Audio lad
+Audio fad
+Audio all
+Audio ads
+Audio fall
+Audio dad
+Audio salad
+Audio flask
+Audio hall
+Audio sad
+Audio asks
+Audio falls
+Audio falks
+Audio lass
+
+//Objects for word audio for arrayOfWordAudio3...
+Audio ed
+Audio led
+Audio eel
+Audio lee
+Audio fed
+Audio sale
+Audio lake
+Audio sash
+Audio dash
+Audio ash
+Audio half
+Audio heal
+Audio deal
+Audio flash
+Audio she
+Audio lash
+Audio shed
+Audio jell
+Audio shelf
+Audio had
+Audio self
+Audio asked
+
+//Objects for wordAudioL4...
+Audio fade
+Audio feels
+Audio of
+Audio old
+Audio sold
+Audio sod
+Audio oak
+Audio joke
+Audio jar
+Audio lark
+Audio here
+Audio rake
+Audio had4
+Audio red
+Audio forks
+Audio rode
+Audio roses
+Audio real
+Audio her
+Audio has
+Audio see
+Audio order
+Audio soar
+Audio door
+Audio floor
+Audio dolls
+Audio food
+
+Audio currentWordPlaying
+
+KeyboardEvent keys
+InputMonitor iMonitor
+
+Random ran
+
+text nextWord = ""
+
+boolean keyReady = true
+boolean letterSoundReady = true
+boolean wordAudioLoadReady = true
+boolean wordPlayReady = true
+
+integer positionInWord = 0
+integer letterPosition = 0
+integer keyOnBoard = 0
+integer positionInWordsArray = 0
+integer levelChoice = 0
+
+    action Main
+        StartGame()
+    end
+
+    action CreateGame
+    
+        //Adding Drawable object into Array...
+        arrayOfDrawables:Add(letterA)
+        arrayOfDrawables:Add(letterB)
+        arrayOfDrawables:Add(letterC)
+        arrayOfDrawables:Add(letterD)
+        arrayOfDrawables:Add(letterE)
+        arrayOfDrawables:Add(letterF)
+        arrayOfDrawables:Add(letterG)
+        arrayOfDrawables:Add(letterH)
+        arrayOfDrawables:Add(letterI)
+        arrayOfDrawables:Add(letterJ)
+        arrayOfDrawables:Add(letterK)
+        arrayOfDrawables:Add(letterL)
+        arrayOfDrawables:Add(letterM)
+        arrayOfDrawables:Add(letterN)
+        arrayOfDrawables:Add(letterO)
+        arrayOfDrawables:Add(letterP)
+        arrayOfDrawables:Add(letterQ)
+        arrayOfDrawables:Add(letterR)
+        arrayOfDrawables:Add(letterS)
+        arrayOfDrawables:Add(letterT)
+        arrayOfDrawables:Add(letterU)
+        arrayOfDrawables:Add(letterV)
+        arrayOfDrawables:Add(letterW)
+        arrayOfDrawables:Add(letterX)
+        arrayOfDrawables:Add(letterY)
+        arrayOfDrawables:Add(letterZ)
+        arrayOfDrawables:Add(spaceKey)
+        arrayOfDrawables:Add(semiColon)
+        
+        //Adding words to Arrays...
+        arrayOfWords1:Add("ff")
+        arrayOfWords1:Add("jj")
+        arrayOfWords1:Add("dd")
+        arrayOfWords1:Add("kk")
+        arrayOfWords1:Add("ss")
+        arrayOfWords1:Add("ll")
+        arrayOfWords1:Add("as")
+        arrayOfWords1:Add("asdf")
+        arrayOfWords1:Add("jkl;")
+        arrayOfWords1:Add("jdk")
+        arrayOfWords1:Add("sla")
+        arrayOfWords1:Add("a;a")
+        arrayOfWords1:Add("sls")
+        arrayOfWords1:Add("dkd")
+        arrayOfWords1:Add("fjf")
+
+        arrayOfWords2:Add("add")
+        arrayOfWords2:Add("lad")
+        arrayOfWords2:Add("fad")
+        arrayOfWords2:Add("all")
+        arrayOfWords2:Add("ads")
+        arrayOfWords2:Add("fall")
+        arrayOfWords2:Add("dad")
+        arrayOfWords2:Add("salad")
+        arrayOfWords2:Add("flask")
+        arrayOfWords2:Add("hall")
+        arrayOfWords2:Add("sad")
+        arrayOfWords2:Add("asks")
+        arrayOfWords2:Add("falls")
+        arrayOfWords2:Add("falks")
+        arrayOfWords2:Add("lass")
+
+        arrayOfWords3:Add("ed")
+        arrayOfWords3:Add("led")
+        arrayOfWords3:Add("eel")
+        arrayOfWords3:Add("lee")
+        arrayOfWords3:Add("fed")
+        arrayOfWords3:Add("sale")
+        arrayOfWords3:Add("lake")
+        arrayOfWords3:Add("sash")
+        arrayOfWords3:Add("dash")
+        arrayOfWords3:Add("ash")
+        arrayOfWords3:Add("half")
+        arrayOfWords3:Add("heal")
+        arrayOfWords3:Add("deal")
+        arrayOfWords3:Add("flash")
+        arrayOfWords3:Add("she")
+        arrayOfWords3:Add("lash")
+        arrayOfWords3:Add("shed")
+        arrayOfWords3:Add("jell")
+        arrayOfWords3:Add("shelf")
+        arrayOfWords3:Add("had")
+        arrayOfWords3:Add("self")
+        arrayOfWords3:Add("asked")
+
+        arrayOfWords4:Add("fade")//5, 0, 3, 4
+        arrayOfWords4:Add("feels")//5, 4, 4, 11, 18
+        arrayOfWords4:Add("of")//14, 5
+        arrayOfWords4:Add("old")//14, 11, 3
+        arrayOfWords4:Add("sold")//18, 14, 11, 3
+        arrayOfWords4:Add("sod")//18, 14, 3
+        arrayOfWords4:Add("oak")//14, 0, 10
+        arrayOfWords4:Add("joke")//9, 14, 10, 4
+        arrayOfWords4:Add("jar")//9, 0, 17
+        arrayOfWords4:Add("lark")//11, 0, 17, 10
+        arrayOfWords4:Add("here")//7, 4, 17, 4
+        arrayOfWords4:Add("rake")//17, 0, 10, 4
+        arrayOfWords4:Add("had")//7, 0, 3
+        arrayOfWords4:Add("red")//17, 4, 3
+        arrayOfWords4:Add("forks")//5, 14, 17, 10, 18
+        arrayOfWords4:Add("rode")//17, 14, 3, 4
+        arrayOfWords4:Add("roses")//17, 14, 18, 4, 18
+        arrayOfWords4:Add("real")//17, 4, 0, 11
+        arrayOfWords4:Add("her")//7, 4, 17
+        arrayOfWords4:Add("has")//7, 0, 18
+        arrayOfWords4:Add("see")//18, 4, 4
+        arrayOfWords4:Add("order")//14, 17, 3, 4, 17
+        arrayOfWords4:Add("soar")//18, 14, 0, 17
+        arrayOfWords4:Add("door")//3, 14, 14, 17
+        arrayOfWords4:Add("floor")//5, 11, 14, 14, 17
+        arrayOfWords4:Add("dolls")//3, 14, 11, 11, 18
+        arrayOfWords4:Add("food")//5, 14, 14, 3
+
+        //Loading Graphics...
+        letterA:Load("Alphabet/A-300.png")
+        letterA:SetPosition(230, 170)
+        Add(letterA)
+        letterA:Hide()
+
+        letterB:Load("Alphabet/B-300.png")
+        letterB:SetPosition(230, 170)
+        Add(letterB)
+        letterB:Hide()
+
+        letterC:Load("Alphabet/C-300.png")
+        letterC:SetPosition(230, 170)
+        Add(letterC)
+        letterC:Hide()
+
+        letterD:Load("Alphabet/D-300.png")
+        letterD:SetPosition(230, 170)
+        Add(letterD)
+        letterD:Hide()
+
+        letterE:Load("Alphabet/E-300.png")
+        letterE:SetPosition(230, 170)
+        Add(letterE)
+        letterE:Hide()
+
+        letterF:Load("Alphabet/F-300.png")
+        letterF:SetPosition(230, 170)
+        Add(letterF)
+        letterF:Hide()
+
+        letterG:Load("Alphabet/G-300.png")
+        letterG:SetPosition(230, 170)
+        Add(letterG)
+        letterG:Hide()
+
+        letterH:Load("Alphabet/H-300.png")
+        letterH:SetPosition(230, 170)
+        Add(letterH)
+        letterH:Hide()
+
+        letterI:Load("Alphabet/I-300.png")
+        letterI:SetPosition(230, 170)
+        Add(letterI)
+        letterI:Hide()
+
+        letterJ:Load("Alphabet/J-300.png")
+        letterJ:SetPosition(230, 170)
+        Add(letterJ)
+        letterJ:Hide()
+
+        letterK:Load("Alphabet/K-300.png")
+        letterK:SetPosition(230, 170)
+        Add(letterK)
+        letterK:Hide()
+
+        letterL:Load("Alphabet/L-300.png")
+        letterL:SetPosition(230, 170)
+        Add(letterL)
+        letterL:Hide()
+
+        letterM:Load("Alphabet/M-300.png")
+        letterM:SetPosition(230, 170)
+        Add(letterM)
+        letterM:Hide()
+
+        letterN:Load("Alphabet/N-300.png")
+        letterN:SetPosition(230, 170)
+        Add(letterN)
+        letterN:Hide()
+
+        letterO:Load("Alphabet/O-300.png")
+        letterO:SetPosition(230, 170)
+        Add(letterO)
+        letterO:Hide()
+
+        letterP:Load("Alphabet/P-300.png")
+        letterP:SetPosition(230, 170)
+        Add(letterP)
+        letterP:Hide()
+
+        letterQ:Load("Alphabet/Q-300.png")
+        letterQ:SetPosition(230, 170)
+        Add(letterQ)
+        letterQ:Hide()
+
+        letterR:Load("Alphabet/R-300.png")
+        letterR:SetPosition(230, 170)
+        Add(letterR)
+        letterR:Hide()
+
+        letterS:Load("Alphabet/S-300.png")
+        letterS:SetPosition(230, 170)
+        Add(letterS)
+        letterS:Hide()
+
+        letterT:Load("Alphabet/T-300.png")
+        letterT:SetPosition(230, 170)
+        Add(letterT)
+        letterT:Hide()
+
+        letterU:Load("Alphabet/U-300.png")
+        letterU:SetPosition(230, 170)
+        Add(letterU)
+        letterU:Hide()
+
+        letterV:Load("Alphabet/V-300.png")
+        letterV:SetPosition(230, 170)
+        Add(letterV)
+        letterV:Hide()
+
+        letterW:Load("Alphabet/W-300.png")
+        letterW:SetPosition(230, 170)
+        Add(letterW)
+        letterW:Hide()
+
+        letterX:Load("Alphabet/X-300.png")
+        letterX:SetPosition(230, 170)
+        Add(letterX)
+        letterX:Hide()
+
+        letterY:Load("Alphabet/Y-300.png")
+        letterY:SetPosition(230, 170)
+        Add(letterY)
+        letterY:Hide()
+
+        letterZ:Load("Alphabet/Z-300.png")
+        letterZ:SetPosition(230, 170)
+        Add(letterZ)
+        letterZ:Hide()
+
+        spaceKey:Load("NonLetterKeys/space.png")
+        spaceKey:SetPosition(230, 170)
+        Add(spaceKey)
+        spaceKey:Hide()
+
+        enterKey:Load("NonLetterKeys/enter.png")
+        enterKey:SetPosition(230, 170)
+        Add(enterKey)
+        enterKey:Hide()
+
+        semiColon:Load("NonLetterKeys/semiColonKey.png")
+        semiColon:SetPosition(230, 170)
+        Add(semiColon)
+        semiColon:Hide()
+
+        choiceScreen:Load("OtherGraphics/LevelChoice.png")
+        choiceScreen:SetPosition(230, 170)
+        Add(choiceScreen)
+            
+        //Loading sound effect
+        ping:Load("Sound/ping.wav")
+        ping:SetVolume(0.1)
+        cheer:Load("Sound/Yay.wav")
+        cheer:SetVolume(0.1)
+
+        //Loading letter sounds...
+        lowerA:Load("LetterSound/Sam-lowerA.wav")
+        lowerB:Load("LetterSound/Sam-lowerB.wav")
+        lowerC:Load("LetterSound/Sam-lowerC.wav")
+        lowerD:Load("LetterSound/Sam-lowerD.wav")
+        lowerE:Load("LetterSound/Sam-lowerE.wav")
+        lowerF:Load("LetterSound/Sam-lowerF.wav")
+        lowerG:Load("LetterSound/Sam-lowerG.wav")
+        lowerH:Load("LetterSound/Sam-lowerH.wav")
+        lowerI:Load("LetterSound/Sam-lowerI.wav")
+        lowerJ:Load("LetterSound/Sam-lowerJ.wav")
+        lowerK:Load("LetterSound/Sam-lowerK.wav")
+        lowerL:Load("LetterSound/Sam-lowerL.wav")
+        lowerM:Load("LetterSound/Sam-lowerM.wav")
+        lowerN:Load("LetterSound/Sam-lowerN.wav")
+        lowerO:Load("LetterSound/Sam-lowerO.wav")
+        lowerP:Load("LetterSound/Sam-lowerP.wav")
+        lowerQ:Load("LetterSound/Sam-lowerQ.wav")
+        lowerR:Load("LetterSound/Sam-lowerR.wav")
+        lowerS:Load("LetterSound/Sam-lowerS.wav")
+        lowerT:Load("LetterSound/Sam-lowerT.wav")
+        lowerU:Load("LetterSound/Sam-lowerU.wav")
+        lowerV:Load("LetterSound/Sam-lowerV.wav")
+        lowerW:Load("LetterSound/Sam-lowerW.wav")
+        lowerX:Load("LetterSound/Sam-lowerX.wav")
+        lowerY:Load("LetterSound/Sam-lowerY.wav")
+        lowerZ:Load("LetterSound/Sam-lowerZ.wav")
+
+        space:Load("LetterSound/Victoria-space.wav")
+        space:SetVolume(0.5)
+        semicolon:Load("LetterSound/Sam-semicolon.wav")
+
+        //Adding the letter sounds to Array
+        arrayOfLetterSounds:Add(lowerA)
+        arrayOfLetterSounds:Add(lowerB)
+        arrayOfLetterSounds:Add(lowerC)
+        arrayOfLetterSounds:Add(lowerD)
+        arrayOfLetterSounds:Add(lowerE)
+        arrayOfLetterSounds:Add(lowerF)
+        arrayOfLetterSounds:Add(lowerG)
+        arrayOfLetterSounds:Add(lowerH)
+        arrayOfLetterSounds:Add(lowerI)
+        arrayOfLetterSounds:Add(lowerJ)
+        arrayOfLetterSounds:Add(lowerK)
+        arrayOfLetterSounds:Add(lowerL)
+        arrayOfLetterSounds:Add(lowerM)
+        arrayOfLetterSounds:Add(lowerN)
+        arrayOfLetterSounds:Add(lowerO)
+        arrayOfLetterSounds:Add(lowerP)
+        arrayOfLetterSounds:Add(lowerQ)
+        arrayOfLetterSounds:Add(lowerR)
+        arrayOfLetterSounds:Add(lowerS)
+        arrayOfLetterSounds:Add(lowerT)
+        arrayOfLetterSounds:Add(lowerU)
+        arrayOfLetterSounds:Add(lowerV)
+        arrayOfLetterSounds:Add(lowerW)
+        arrayOfLetterSounds:Add(lowerX)
+        arrayOfLetterSounds:Add(lowerY)
+        arrayOfLetterSounds:Add(lowerZ)
+
+        arrayOfLetterSounds:Add(space)
+        arrayOfLetterSounds:Add(semicolon)
+          
+        // say "Welcome to the Letter Typing program. Press enter to begin. Type the word as the letter appears on the screen. "
+
+        // Setting up label for the level option screen
+        fontLO:LoadFont("Arial")
+        fontLO:SetSize(48)
+
+        levelOption:SetFont(fontLO)
+        levelOption:SetText("Choose the level")
+        levelOption:SetPosition(300, 450)
+        Add(levelOption)
+        
+        // Setting up the label for the'enter to begin screen'       
+        font1:LoadFont("Arial")
+        font1:SetSize(48)
+
+        enterLabel:SetFont(font1)
+        enterLabel:SetText("Press enter to begin!")
+        enterLabel:SetPosition(300, 450)
+        Add(enterLabel)
+        enterLabel:Hide()
+        
+        //Setting up the font for the label for words
+        fontX:LoadFont("Arial")
+        fontX:SetSize(72)  
+    end
+
+    action Update(number seconds)
+
+//When the option screen is showing...
+        if levelOption:IsShowing() = true and levelChoice = 0
+            if iMonitor:IsKeyPressed(keys:A) = true
+                levelOption:Hide()
+                choiceScreen:Hide()
+                levelChoice = 1
+                enterLabel:Show()
+                enterKey:Show()
+            elseif iMonitor:IsKeyPressed(keys:B) = true
+                levelOption:Hide()
+                choiceScreen:Hide()
+                levelChoice = 2
+                enterLabel:Show()
+                enterKey:Show()
+            elseif iMonitor:IsKeyPressed(keys:C) = true
+                levelOption:Hide()
+                choiceScreen:Hide()
+                levelChoice = 3
+                enterLabel:Show()
+                enterKey:Show()
+            elseif iMonitor:IsKeyPressed(keys:D) = true
+                levelOption:Hide()
+                choiceScreen:Hide()
+                levelChoice = 4
+                enterLabel:Show()
+                enterKey:Show()
+            end
+//After the user select the level ...
+        elseif levelOption:IsShowing() = false and levelChoice = 1
+
+            SetKeyboard()
+
+            SetupEnterFunctionForEachLevel(arrayOfWords1, 14)
+
+            SetupSpacekeyFunctionForEachLevel(arrayOfWords1, 14)
+
+                if positionInWordsArray = 0
+                    TwoLetter(5, 5)
+                elseif positionInWordsArray = 1
+                    TwoLetter(9, 9)
+                elseif positionInWordsArray = 2
+                    TwoLetter(3, 3)
+                elseif positionInWordsArray = 3
+                    TwoLetter(10, 10)
+                elseif positionInWordsArray = 4
+                    TwoLetter(18, 18)
+                elseif positionInWordsArray = 5
+                    TwoLetter(11, 11)
+                elseif positionInWordsArray = 6
+                    TwoLetter(0, 18)
+                elseif positionInWordsArray = 7
+                    FourLetter(0, 18, 3, 5)
+                elseif positionInWordsArray = 8
+                    FourLetter(9, 10, 11, 27)
+                elseif positionInWordsArray = 9
+                    ThreeLetter(9, 3, 10)
+                elseif positionInWordsArray = 10
+                    ThreeLetter(18, 11, 0)
+                elseif positionInWordsArray = 11
+                    ThreeLetter(0, 27, 0)
+                elseif positionInWordsArray = 12
+                    ThreeLetter(18, 11, 18)
+                elseif positionInWordsArray = 13
+                    ThreeLetter(3, 10, 3)
+                elseif positionInWordsArray = 14
+                    ThreeLetter(5, 9, 5)
+                end
+
+                EscapeToReset()
+
+        elseif levelOption:IsShowing() = false and levelChoice = 2
+
+            SetKeyboard()
+
+            SetupEnterFunctionForEachLevel(arrayOfWords2, 14)
+
+            SetupSpacekeyFunctionForEachLevel(arrayOfWords2, 14)
+
+
+                if positionInWordsArray = 0
+                    ThreeLetter(0, 3, 3)
+                elseif positionInWordsArray = 1
+                    ThreeLetter(11, 0, 3)
+                elseif positionInWordsArray = 2
+                    ThreeLetter(5, 0, 3)
+                elseif positionInWordsArray = 3
+                    ThreeLetter(0, 11, 11)
+                elseif positionInWordsArray = 4
+                    ThreeLetter(0, 3, 18)
+                elseif positionInWordsArray = 5
+                    FourLetter(5, 0, 11, 11)
+                elseif positionInWordsArray = 6
+                    ThreeLetter(3, 0, 3)
+                elseif positionInWordsArray = 7
+                    FiveLetter(18, 0, 11, 0, 3)
+                elseif positionInWordsArray = 8
+                    FiveLetter(5, 11, 0, 18, 10)
+                elseif positionInWordsArray = 9
+                    FourLetter(7, 0, 11, 11)
+                elseif positionInWordsArray = 10
+                    ThreeLetter(18, 0, 3)
+                elseif positionInWordsArray = 11
+                    FourLetter(0, 18, 10, 18)
+                elseif positionInWordsArray = 12
+                    FiveLetter(5, 0, 11, 11, 18)
+                elseif positionInWordsArray = 13
+                    FiveLetter(5, 0, 11, 10, 18)
+                elseif positionInWordsArray = 14
+                    FourLetter(11, 0, 18, 18)
+                end
+
+                EscapeToReset()
+
+        elseif levelOption:IsShowing() = false and levelChoice = 3
+
+            SetKeyboard()
+
+            SetupEnterFunctionForEachLevel(arrayOfWords3, 21)
+
+            SetupSpacekeyFunctionForEachLevel(arrayOfWords3, 21)
+
+                if positionInWordsArray = 0
+                    TwoLetter(4, 3)
+                elseif positionInWordsArray = 1
+                    ThreeLetter(11, 4, 3)
+                elseif positionInWordsArray = 2
+                    ThreeLetter(4, 4, 11)
+                elseif positionInWordsArray = 3
+                    ThreeLetter(11, 4, 4)
+                elseif positionInWordsArray = 4
+                    ThreeLetter(5, 4, 3)
+                elseif positionInWordsArray = 5
+                    FourLetter(18, 0, 11, 4)
+                elseif positionInWordsArray = 6
+                    FourLetter(11, 0, 10, 4)
+                elseif positionInWordsArray = 7
+                    FourLetter(18, 0, 18, 7)
+                elseif positionInWordsArray = 8
+                    FourLetter(3, 0, 18, 7)
+                elseif positionInWordsArray = 9
+                    ThreeLetter(0, 18, 7)
+                elseif positionInWordsArray = 10
+                    FourLetter(7, 0, 11, 5)
+                elseif positionInWordsArray = 11
+                    FourLetter(7, 4, 0, 11)
+                elseif positionInWordsArray = 12
+                    FourLetter(3, 4, 0, 11)
+                elseif positionInWordsArray = 13
+                    FiveLetter(5, 11, 0, 18, 7)
+                elseif positionInWordsArray = 14
+                    ThreeLetter(18, 7, 4)
+                elseif positionInWordsArray = 15
+                    FourLetter(11, 0, 18, 7)
+                elseif positionInWordsArray = 16
+                    FourLetter(18, 7, 4, 3)
+                elseif positionInWordsArray = 17
+                    FourLetter(9, 4, 11, 11)
+                elseif positionInWordsArray = 18
+                    FiveLetter(18, 7, 4, 11, 5)
+                elseif positionInWordsArray = 19
+                    ThreeLetter(7, 0, 3)
+                elseif positionInWordsArray = 20
+                    FourLetter(18, 4, 11, 5)
+                elseif positionInWordsArray = 21
+                    FiveLetter(0, 18, 10, 4, 3)
+                end
+
+                EscapeToReset()
+
+        elseif levelOption:IsShowing() = false and levelChoice = 4
+
+            SetKeyboard()
+
+            SetupEnterFunctionForEachLevel(arrayOfWords4, 26)
+
+            SetupSpacekeyFunctionForEachLevel(arrayOfWords4, 26)
+
+                if positionInWordsArray = 0
+                    FourLetter(5, 0, 3, 4)
+                elseif positionInWordsArray = 1
+                    FiveLetter(5, 4, 4, 11, 18)
+                elseif positionInWordsArray = 2
+                    TwoLetter(14, 5)
+                elseif positionInWordsArray = 3
+                    ThreeLetter(14, 11, 3)
+                elseif positionInWordsArray = 4
+                    FourLetter(18, 14, 11, 3)
+                elseif positionInWordsArray = 5
+                    ThreeLetter(18, 14, 3)
+                elseif positionInWordsArray = 6
+                    ThreeLetter(14, 0, 10)
+                elseif positionInWordsArray = 7
+                    FourLetter(9, 14, 10, 4)
+                elseif positionInWordsArray = 8
+                    ThreeLetter(9, 0, 17)
+                elseif positionInWordsArray = 9
+                    FourLetter(11, 0, 17, 10)
+                elseif positionInWordsArray = 10
+                    FourLetter(7, 4, 17, 4)
+                elseif positionInWordsArray = 11
+                    FourLetter(17, 0, 10, 4)
+                elseif positionInWordsArray = 12
+                    ThreeLetter(7, 0, 3)
+                elseif positionInWordsArray = 13
+                    ThreeLetter(17, 4, 3)
+                elseif positionInWordsArray = 14
+                    FiveLetter(5, 14, 17, 10, 18)
+                elseif positionInWordsArray = 15
+                    FourLetter(17, 14, 3, 4)
+                elseif positionInWordsArray = 16
+                    FiveLetter(17, 14, 18, 4, 18)
+                elseif positionInWordsArray = 17
+                    FourLetter(17, 4, 0, 11)
+                elseif positionInWordsArray = 18
+                    ThreeLetter(7, 4, 17)
+                elseif positionInWordsArray = 19
+                    ThreeLetter(7, 0, 18)
+                elseif positionInWordsArray = 20
+                    ThreeLetter(18, 4, 4)
+                elseif positionInWordsArray = 21
+                    FiveLetter(14, 17, 3, 4, 17)
+                elseif positionInWordsArray = 22
+                    FourLetter(18, 14, 0, 17)
+                elseif positionInWordsArray = 23
+                    FourLetter(3, 14, 14, 17)
+                elseif positionInWordsArray = 24
+                    FiveLetter(5, 11, 14, 14, 17)
+                elseif positionInWordsArray = 25
+                    FiveLetter(3, 14, 11, 11, 18)
+                elseif positionInWordsArray = 26
+                    FourLetter(5, 14, 14, 3)
+                end
+
+                EscapeToReset()
+        end
+    end
+
+//ACTIONS =====================================================================
+
+    action SetKeyboard
+        if letterPosition = 0
+            keyOnBoard = keys:A    
+        elseif letterPosition = 1
+            keyOnBoard = keys:B    
+        elseif letterPosition = 2
+            keyOnBoard = keys:C 
+        elseif letterPosition = 3
+            keyOnBoard = keys:D    
+        elseif letterPosition = 4
+            keyOnBoard = keys:E 
+        elseif letterPosition = 5
+            keyOnBoard = keys:F    
+        elseif letterPosition = 6
+            keyOnBoard = keys:G 
+        elseif letterPosition = 7
+            keyOnBoard = keys:H    
+        elseif letterPosition = 8
+            keyOnBoard = keys:I 
+        elseif letterPosition = 9
+            keyOnBoard = keys:J    
+        elseif letterPosition = 10
+            keyOnBoard = keys:K 
+        elseif letterPosition = 11
+            keyOnBoard = keys:L    
+        elseif letterPosition = 12
+            keyOnBoard = keys:M 
+        elseif letterPosition = 13
+            keyOnBoard = keys:N    
+        elseif letterPosition = 14
+            keyOnBoard = keys:O 
+        elseif letterPosition = 15
+            keyOnBoard = keys:P    
+        elseif letterPosition = 16
+            keyOnBoard = keys:Q
+        elseif letterPosition = 17
+            keyOnBoard = keys:R    
+        elseif letterPosition = 18
+            keyOnBoard = keys:S
+        elseif letterPosition = 19
+            keyOnBoard = keys:T    
+        elseif letterPosition = 20
+            keyOnBoard = keys:U 
+        elseif letterPosition = 21
+            keyOnBoard = keys:V    
+        elseif letterPosition = 22
+            keyOnBoard = keys:W 
+        elseif letterPosition = 23
+            keyOnBoard = keys:X    
+        elseif letterPosition = 24
+            keyOnBoard = keys:Y
+        elseif letterPosition = 25
+            keyOnBoard = keys:Z
+        elseif letterPosition = 26
+            keyOnBoard = keys:SPACE
+        elseif letterPosition = 27
+            keyOnBoard = keys:SEMICOLON
+        end
+    end
+
+    action SetupEnterFunctionForEachLevel(Array<text> currentArray, integer x)
+        //When [Enter] is showing to set up the first screen for the word and letter ...
+        if enterKey:IsShowing() = true
+            //Have the 'random action' choose the next word, keep it hidden still...
+            positionInWordsArray = ran:RandomIntegerBetween(0, x)
+            nextWord = currentArray:Get(positionInWordsArray)
+
+            labelX:SetFont(fontX)
+            labelX:SetText(nextWord)
+            labelX:SetPosition(300, 500)
+            Add(labelX)
+            labelX:Hide()
+
+            //Pressing the [Enter] now will show the next word ...
+            if iMonitor:IsKeyPressed(keys:ENTER) = true and keyReady = true
+                enterKey:Hide()
+                enterLabel:Hide()
+
+                //Setting audio for words in level1...
+                if wordAudioLoadReady = true
+                    if levelChoice = 1
+                        AddingWordAudioForL1()
+                    elseif levelChoice = 2
+                        AddingWordAudioForL2()
+                    elseif levelChoice = 3
+                        AddingWordAudioForL3()
+                    elseif levelChoice = 4
+                        AddingWordAudioForL4()
+                    end
+                    wordAudioLoadReady = false
+                end
+
+                labelX:Show()
+                
+                if levelChoice = 1
+                    PlayingWordAudio1(positionInWordsArray)
+                elseif levelChoice = 2
+                    PlayingWordAudio2(positionInWordsArray)
+                elseif levelChoice = 3
+                    PlayingWordAudio3(positionInWordsArray)
+                elseif levelChoice = 4
+                    PlayingWordAudio4(positionInWordsArray)
+                end
+
+                keyReady = false
+
+                //Now setting the first letter in the word...
+                positionInWord = 1
+
+            elseif iMonitor:IsKeyPressed(keys:ENTER) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+
+    action SetupSpacekeyFunctionForEachLevel(Array<text> currentArray, integer x)
+        //In between the words while [spacekey] is showing...
+        if spaceKey:IsShowing() = true
+            positionInWordsArray = ran:RandomIntegerBetween(0, x)
+            nextWord = currentArray:Get(positionInWordsArray)
+            //setting the next word as we did in [Enter] key screen...
+            labelX:SetFont(fontX)
+            labelX:SetText(nextWord)
+            labelX:SetPosition(300, 500)
+            Add(labelX)
+            labelX:Hide()
+            
+            //Since the 'keyOnBoard' is already set to [spacekey] in other actions...
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                spaceKey:Hide()
+                space:Stop()
+                enterLabel:Hide()
+                labelX:Show()
+
+                if levelChoice = 1
+                    PlayingWordAudio1(positionInWordsArray)
+                elseif levelChoice = 2
+                    PlayingWordAudio2(positionInWordsArray)
+                elseif levelChoice = 3
+                    PlayingWordAudio3(positionInWordsArray)
+                elseif levelChoice = 4
+                    PlayingWordAudio4(positionInWordsArray)
+                end
+
+                positionInWord = 1
+                keyReady = false
+                //Setting the boolean for the letter sounds back to true...
+                letterSoundReady = true
+
+            elseif iMonitor:IsKeyPressed(keys:SPACE) = false and keyReady = false
+                keyReady = true
+            end
+        end
+
+    end
+
+    action EscapeToReset 
+        if iMonitor:IsKeyPressed(keys:ESCAPE) = true
+            letterA:Hide()
+            letterB:Hide()
+            letterC:Hide()
+            letterD:Hide()
+            letterE:Hide()
+            letterF:Hide()
+            letterG:Hide()
+            letterH:Hide()
+            letterI:Hide()
+            letterJ:Hide()
+            letterK:Hide()
+            letterL:Hide()
+            letterM:Hide()
+            letterN:Hide()
+            letterO:Hide()
+            letterP:Hide()
+            letterQ:Hide()
+            letterR:Hide()
+            letterS:Hide()
+            letterT:Hide()
+            letterU:Hide()
+            letterV:Hide()
+            letterW:Hide()
+            letterX:Hide()
+            letterY:Hide()
+            letterZ:Hide()
+            spaceKey:Hide()
+            semiColon:Hide()
+
+            lowerA:Stop()
+            lowerB:Stop()
+            lowerC:Stop()
+            lowerD:Stop()
+            lowerE:Stop()
+            lowerF:Stop()
+            lowerG:Stop()
+            lowerH:Stop()
+            lowerI:Stop()
+            lowerJ:Stop()
+            lowerK:Stop()
+            lowerL:Stop()
+            lowerM:Stop()
+            lowerN:Stop()
+            lowerO:Stop()
+            lowerP:Stop()
+            lowerQ:Stop()
+            lowerR:Stop()
+            lowerS:Stop()
+            lowerT:Stop()
+            lowerU:Stop()
+            lowerV:Stop()
+            lowerW:Stop()
+            lowerX:Stop()
+            lowerY:Stop()
+            lowerZ:Stop()
+
+            if levelChoice = 1
+                DisposingAudioL1()
+            elseif levelChoice = 2
+                DisposingAudioL2()
+            elseif levelChoice = 3
+                DisposingAudioL3()
+            elseif levelChoice = 4
+                DisposingAudioL4()
+            end
+
+            space:Stop()
+            semicolon:Stop()
+
+            labelX:Hide()
+            nextDrawable:Hide()
+            levelChoice = 0
+            levelOption:Show()
+            choiceScreen:Show()
+            letterSoundReady = true
+            wordAudioLoadReady = true
+        end
+    end
+
+//Engines for letter graphics and audio...
+    action TwoLetter(integer a, integer b)
+        if positionInWord =1
+            
+                letterPosition = a
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+
+            if letterSoundReady = true
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+                letterSoundReady = false
+            end
+                
+            
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = b
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 2
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 2
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                
+                nextLetterAudio:Stop()
+                
+                cheer:Play()
+                
+                labelX:Hide()
+
+                letterPosition = 26
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+                
+                keyReady = false
+                
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+
+    action ThreeLetter(integer a, integer b, integer c)
+        if positionInWord =1
+            
+                letterPosition = a
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+        
+                if letterSoundReady = true
+                    nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                    nextLetterAudio:Play()
+                    letterSoundReady = false
+                end
+            
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+               
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = b
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 2
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 2
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = c
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 3
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 3
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                cheer:Play()
+                
+                labelX:Hide()
+
+                letterPosition = 26
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+               
+                keyReady = false
+                
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+
+    action FourLetter(integer a, integer b, integer c, integer d)
+        if positionInWord =1
+            
+                letterPosition = a
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+        
+                if letterSoundReady = true
+                    nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                    nextLetterAudio:Play()
+                    letterSoundReady = false
+                end
+            
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+
+                ping:Play()
+
+                letterPosition = b
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+                keyReady = false
+                positionInWord = 2
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 2
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+
+                ping:Play()
+
+                letterPosition = c
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 3
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 3
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = d
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 4
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 4
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+
+                cheer:Play()
+                
+                labelX:Hide()
+
+                letterPosition = 26
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+               
+                keyReady = false
+                
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+
+    action FiveLetter(integer a, integer b, integer c, integer d, integer e)
+        if positionInWord =1
+            
+                letterPosition = a
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+        
+                if letterSoundReady = true
+                    nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                    nextLetterAudio:Play()
+                    letterSoundReady = false
+                end
+            
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+               
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+
+                ping:Play()
+
+                letterPosition = b
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 2
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 2
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+
+                ping:Play()
+
+                letterPosition = c
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 3
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 3
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+               
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = d
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 4
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 4
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = e
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 5
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 5
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                cheer:Play()
+                
+                labelX:Hide()
+
+                letterPosition = 26
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+               
+                keyReady = false
+                
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+
+    action SixLetter(integer a, integer b, integer c, integer d, integer e, integer f)
+        if positionInWord =1
+            
+                letterPosition = a
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+        
+                if letterSoundReady = true
+                    nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                    nextLetterAudio:Play()
+                    letterSoundReady = false
+                end
+            
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = b
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 2
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 2
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = c
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 3
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 3
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = d
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 4
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 4
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = e
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 5
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 5
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                ping:Play()
+
+                letterPosition = f
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+
+                keyReady = false
+                positionInWord = 6
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        elseif positionInWord = 6
+            if iMonitor:IsKeyPressed(keyOnBoard) = true and keyReady = true
+                
+                nextDrawable:Hide()
+                nextLetterAudio:Stop()
+                
+                cheer:Play()
+                
+                labelX:Hide()
+
+                letterPosition = 26
+
+                nextDrawable = arrayOfDrawables:Get(letterPosition)
+                nextDrawable:Show()
+                nextLetterAudio = arrayOfLetterSounds:Get(letterPosition)
+                nextLetterAudio:Play()
+               
+                keyReady = false
+                
+            elseif iMonitor:IsKeyPressed(keyOnBoard) = false and keyReady = false
+                keyReady = true
+            end
+        end
+    end
+//Adding abd Disposing Audio for words =======================================================
+//Word audio for L1...
+    action AddingWordAudioForL1
+        ff:Load("WordAudio/WordAudio1/Alex-ff.wav")
+        jj:Load("WordAudio/WordAudio1/Alex-jj.wav")
+        dd:Load("WordAudio/WordAudio1/Alex-dd.wav")
+        kk:Load("WordAudio/WordAudio1/Alex-kk.wav")
+        ss:Load("WordAudio/WordAudio1/Alex-ss.wav")
+        ll:Load("WordAudio/WordAudio1/Alex-ll.wav")
+        a_s:Load("WordAudio/WordAudio1/Alex-as.wav")
+        asdf:Load("WordAudio/WordAudio1/Alex-asdf.wav")
+        jklSem:Load("WordAudio/WordAudio1/Alex-jklSem.wav")
+        jdk:Load("WordAudio/WordAudio1/Alex-jdk.wav")
+        sla:Load("WordAudio/WordAudio1/Alex-sla.wav")
+        aSemA:Load("WordAudio/WordAudio1/Alex-aSemA.wav")
+        sls:Load("WordAudio/WordAudio1/Alex-sls.wav")
+        dkd:Load("WordAudio/WordAudio1/Alex-dkd.wav")
+        fjf:Load("WordAudio/WordAudio1/Alex-fjf.wav")
+
+        arrayOfWordAudio1:Add(ff)
+        arrayOfWordAudio1:Add(jj)
+        arrayOfWordAudio1:Add(dd)
+        arrayOfWordAudio1:Add(kk)
+        arrayOfWordAudio1:Add(ss)
+        arrayOfWordAudio1:Add(ll)
+        arrayOfWordAudio1:Add(a_s)
+        arrayOfWordAudio1:Add(asdf)
+        arrayOfWordAudio1:Add(jklSem)
+        arrayOfWordAudio1:Add(jdk)
+        arrayOfWordAudio1:Add(sla)
+        arrayOfWordAudio1:Add(aSemA)
+        arrayOfWordAudio1:Add(sls)
+        arrayOfWordAudio1:Add(dkd)
+        arrayOfWordAudio1:Add(fjf)
+    end
+
+    action PlayingWordAudio1(integer x)
+        currentWordPlaying = arrayOfWordAudio1:Get(x)
+        currentWordPlaying:PlayUntilDone()
+    end
+
+    action DisposingAudioL1
+        ff:Dispose()
+        jj:Dispose()
+        dd:Dispose()
+        kk:Dispose()
+        ss:Dispose()
+        ll:Dispose()
+        a_s:Dispose()
+        asdf:Dispose()
+        jklSem:Dispose()
+        jdk:Dispose()
+        sla:Dispose()
+        aSemA:Dispose()
+        sls:Dispose()
+        dkd:Dispose()
+        fjf:Dispose()
+    end
+//Word audio for L2...
+     action AddingWordAudioForL2
+        add:Load("WordAudio/WordAudio2/Alex-add.wav")
+        lad:Load("WordAudio/WordAudio2/Alex-lad.wav")
+        fad:Load("WordAudio/WordAudio2/Alex-fad.wav")
+        all:Load("WordAudio/WordAudio2/Alex-all.wav")
+        ads:Load("WordAudio/WordAudio2/Alex-ads.wav")
+        fall:Load("WordAudio/WordAudio2/Alex-fall.wav")
+        dad:Load("WordAudio/WordAudio2/Alex-dad.wav")
+        salad:Load("WordAudio/WordAudio2/Alex-salad.wav")
+        flask:Load("WordAudio/WordAudio2/Alex-flask.wav")
+        hall:Load("WordAudio/WordAudio2/Alex-hall.wav")
+        sad:Load("WordAudio/WordAudio2/Alex-sad.wav")
+        asks:Load("WordAudio/WordAudio2/Alex-asks.wav")
+        falls:Load("WordAudio/WordAudio2/Alex-falls.wav")
+        falks:Load("WordAudio/WordAudio2/Alex-falks.wav")
+        lass:Load("WordAudio/WordAudio2/Alex-lass.wav")
+
+        arrayOfWordAudio2:Add(add)
+        arrayOfWordAudio2:Add(fad)
+        arrayOfWordAudio2:Add(fad)
+        arrayOfWordAudio2:Add(all)
+        arrayOfWordAudio2:Add(ads)
+        arrayOfWordAudio2:Add(fall)
+        arrayOfWordAudio2:Add(dad)
+        arrayOfWordAudio2:Add(salad)
+        arrayOfWordAudio2:Add(flask)
+        arrayOfWordAudio2:Add(hall)
+        arrayOfWordAudio2:Add(sad)
+        arrayOfWordAudio2:Add(asks)
+        arrayOfWordAudio2:Add(falls)
+        arrayOfWordAudio2:Add(falks)
+        arrayOfWordAudio2:Add(lass)
+    end
+
+    action PlayingWordAudio2(integer x)
+        currentWordPlaying = arrayOfWordAudio2:Get(x)
+        currentWordPlaying:PlayUntilDone()
+    end
+
+    action DisposingAudioL2
+        add:Dispose()
+        lad:Dispose()
+        fad:Dispose()
+        all:Dispose()
+        ads:Dispose()
+        fall:Dispose()
+        dad:Dispose()
+        salad:Dispose()
+        flask:Dispose()
+        hall:Dispose()
+        sad:Dispose()
+        asks:Dispose()
+        falls:Dispose()
+        falks:Dispose()
+        lass:Dispose()
+    end
+//Word audio for L3...
+    action AddingWordAudioForL3
+        ed:Load("WordAudio/WordAudio3/Alex-ed.wav")
+        led:Load("WordAudio/WordAudio3/Alex-led.wav")
+        eel:Load("WordAudio/WordAudio3/Alex-eel.wav")
+        lee:Load("WordAudio/WordAudio3/Alex-lee.wav")
+        fed:Load("WordAudio/WordAudio3/Alex-fed.wav")
+        sale:Load("WordAudio/WordAudio3/Alex-sale.wav")
+        lake:Load("WordAudio/WordAudio3/Alex-lake.wav")
+        sash:Load("WordAudio/WordAudio3/Alex-sash.wav")
+        dash:Load("WordAudio/WordAudio3/Alex-dash.wav")
+        ash:Load("WordAudio/WordAudio3/Alex-ash.wav")
+        half:Load("WordAudio/WordAudio3/Alex-half.wav")
+        heal:Load("WordAudio/WordAudio3/Alex-heal.wav")
+        deal:Load("WordAudio/WordAudio3/Alex-deal.wav")
+        flash:Load("WordAudio/WordAudio3/Alex-flash.wav")
+        she:Load("WordAudio/WordAudio3/Alex-she.wav")
+	lash:Load("WordAudio/WordAudio3/Alex-lash.wav")
+	shed:Load("WordAudio/WordAudio3/Alex-shed.wav")
+	jell:Load("WordAudio/WordAudio3/Alex-jell.wav")
+	shelf:Load("WordAudio/WordAudio3/Alex-shelf.wav")
+	had:Load("WordAudio/WordAudio3/Alex-had.wav")
+	self:Load("WordAudio/WordAudio3/Alex-self.wav")
+	asked:Load("WordAudio/WordAudio3/Alex-asked.wav")
+
+        arrayOfWordAudio3:Add(ed)
+        arrayOfWordAudio3:Add(led)
+        arrayOfWordAudio3:Add(eel)
+        arrayOfWordAudio3:Add(lee)
+        arrayOfWordAudio3:Add(fed)
+        arrayOfWordAudio3:Add(sale)
+        arrayOfWordAudio3:Add(lake)
+        arrayOfWordAudio3:Add(sash)
+        arrayOfWordAudio3:Add(dash)
+        arrayOfWordAudio3:Add(ash)
+        arrayOfWordAudio3:Add(half)
+        arrayOfWordAudio3:Add(heal)
+        arrayOfWordAudio3:Add(deal)
+        arrayOfWordAudio3:Add(flash)
+        arrayOfWordAudio3:Add(she)
+	arrayOfWordAudio3:Add(lash)
+	arrayOfWordAudio3:Add(shed)
+	arrayOfWordAudio3:Add(jell)
+	arrayOfWordAudio3:Add(shelf)
+	arrayOfWordAudio3:Add(had)
+	arrayOfWordAudio3:Add(self)
+	arrayOfWordAudio3:Add(asked)
+    end
+
+    action PlayingWordAudio3(integer x)
+        currentWordPlaying = arrayOfWordAudio3:Get(x)
+        currentWordPlaying:PlayUntilDone()
+    end
+
+    action DisposingAudioL3
+        ed:Dispose()
+        led:Dispose()
+        eel:Dispose()
+        lee:Dispose()
+        fed:Dispose()
+        sale:Dispose()
+        lake:Dispose()
+        sash:Dispose()
+        dash:Dispose()
+        ash:Dispose()
+        half:Dispose()
+        heal:Dispose()
+        deal:Dispose()
+        flash:Dispose()
+        she:Dispose()
+	lash:Dispose()
+	shed:Dispose()
+	jell:Dispose()
+	shelf:Dispose()
+	had:Dispose()
+	self:Dispose()
+	asked:Dispose()
+    end
+//Word audio for L4
+    action AddingWordAudioForL4
+        fade:Load("WordAudio/WordAudio4/Alex-fade.wav")
+        feels:Load("WordAudio/WordAudio4/Alex-feels.wav")
+        of:Load("WordAudio/WordAudio4/Alex-of.wav")
+        old:Load("WordAudio/WordAudio4/Alex-old.wav")
+        sold:Load("WordAudio/WordAudio4/Alex-sold.wav")
+        sod:Load("WordAudio/WordAudio4/Alex-sod.wav")
+        oak:Load("WordAudio/WordAudio4/Alex-oak.wav")
+        joke:Load("WordAudio/WordAudio4/Alex-joke.wav")
+        jar:Load("WordAudio/WordAudio4/Alex-jar.wav")
+        lark:Load("WordAudio/WordAudio4/Alex-lark.wav")
+        here:Load("WordAudio/WordAudio4/Alex-here.wav")
+        rake:Load("WordAudio/WordAudio4/Alex-rake.wav")
+        had4:Load("WordAudio/WordAudio4/Alex-had4.wav")
+        red:Load("WordAudio/WordAudio4/Alex-red.wav")
+        forks:Load("WordAudio/WordAudio4/Alex-forks.wav")
+	rode:Load("WordAudio/WordAudio4/Alex-rode.wav")
+	roses:Load("WordAudio/WordAudio4/Alex-roses.wav")
+	real:Load("WordAudio/WordAudio4/Alex-real.wav")
+	her:Load("WordAudio/WordAudio4/Alex-her.wav")
+	has:Load("WordAudio/WordAudio4/Alex-has.wav")
+	see:Load("WordAudio/WordAudio4/Alex-see.wav")
+	order:Load("WordAudio/WordAudio4/Alex-order.wav")
+	soar:Load("WordAudio/WordAudio4/Alex-soar.wav")
+	door:Load("WordAudio/WordAudio4/Alex-door.wav")
+	floor:Load("WordAudio/WordAudio4/Alex-floor.wav")
+	dolls:Load("WordAudio/WordAudio4/Alex-dolls.wav")
+	food:Load("WordAudio/WordAudio4/Alex-food.wav")
+
+	arrayOfWordAudio4:Add(fade)
+        arrayOfWordAudio4:Add(feels)
+        arrayOfWordAudio4:Add(of)
+        arrayOfWordAudio4:Add(old)
+        arrayOfWordAudio4:Add(sold)
+        arrayOfWordAudio4:Add(sod)
+        arrayOfWordAudio4:Add(oak)
+        arrayOfWordAudio4:Add(joke)
+        arrayOfWordAudio4:Add(jar)
+        arrayOfWordAudio4:Add(lark)
+        arrayOfWordAudio4:Add(here)
+        arrayOfWordAudio4:Add(rake)
+        arrayOfWordAudio4:Add(had4)
+        arrayOfWordAudio4:Add(red)
+        arrayOfWordAudio4:Add(forks)
+	 arrayOfWordAudio4:Add(rode)
+	arrayOfWordAudio4:Add(roses)
+	arrayOfWordAudio4:Add(real)
+	arrayOfWordAudio4:Add(her)
+	arrayOfWordAudio4:Add(has)
+	arrayOfWordAudio4:Add(see)
+	arrayOfWordAudio4:Add(order)
+	arrayOfWordAudio4:Add(soar)
+	arrayOfWordAudio4:Add(door)
+	arrayOfWordAudio4:Add(floor)
+	arrayOfWordAudio4:Add(dolls)
+	arrayOfWordAudio4:Add(food)
+    end
+
+    action PlayingWordAudio4(integer x)
+        currentWordPlaying = arrayOfWordAudio4:Get(x)
+        currentWordPlaying:PlayUntilDone()
+    end
+
+    action DisposingAudioL4
+        fade:Dispose()
+        feels:Dispose()
+        of:Dispose()
+        old:Dispose()
+        sold:Dispose()
+        sod:Dispose()
+        oak:Dispose()
+        joke:Dispose()
+        jar:Dispose()
+        lark:Dispose()
+        here:Dispose()
+        rake:Dispose()
+        had4:Dispose()
+        red:Dispose()
+        forks:Dispose()
+	rode:Dispose()
+	roses:Dispose()
+	real:Dispose()
+	her:Dispose()
+	has:Dispose()
+	see:Dispose()
+	order:Dispose()
+	soar:Dispose()
+	door:Dispose()
+	floor:Dispose()
+	dolls:Dispose()
+	food:Dispose()
+    end
+end
